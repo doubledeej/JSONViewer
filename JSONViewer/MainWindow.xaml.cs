@@ -19,7 +19,7 @@ namespace JSONViewer
             InitializeComponent();
         }
 
-        private void LoadJson(string json)
+        private void LoadJson(string json, bool showerror = true)
         {
             try
             {
@@ -29,7 +29,8 @@ namespace JSONViewer
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error parsing JSON: " + ex.Message);
+                if (showerror)
+                    MessageBox.Show("Error parsing JSON: " + ex.Message);
             }
         }
 
@@ -111,7 +112,7 @@ namespace JSONViewer
 
         private void btnLoadJson_Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new OpenFileDialog { Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*" };
+            OpenFileDialog dlg = new OpenFileDialog { Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*" };
             if (dlg.ShowDialog() == true)
             {
                 try
@@ -127,18 +128,19 @@ namespace JSONViewer
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (Clipboard.ContainsText())
+            if (!Clipboard.ContainsText())
+                return;
+
+            string cliptext = Clipboard.GetText();
+            if (cliptext.StartsWith('[') || cliptext.StartsWith('{'))
             {
-                string clipboardText = Clipboard.GetText();
-                if (clipboardText.StartsWith("[") || clipboardText.StartsWith("{"))
-                {
-                    try
-                    {
-                        LoadJson(clipboardText);
-                    }
-                    catch { }
-                }   
+                LoadJson(cliptext, false);
             }
+        }
+
+        private void btnAbout_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("JSON Viewer\n\nA simple tool to view and explore JSON data.\n\n© 2025 Doug Johnson\nhttps://github.com/doubledeej/JSONViewer");
         }
     }
 }

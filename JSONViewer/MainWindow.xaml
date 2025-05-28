@@ -23,6 +23,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" VerticalAlignment="Stretch">
             <Button x:Name="btnLoadJson" Content="{StaticResource folder-open-small}" ToolTip="Open JSON File" Click="btnLoadJson_Click" Margin="8,3,3,3" Padding="2" BorderBrush="Transparent" />
             <Button x:Name="btnPasteJson" Content="{StaticResource clipboard-paste-small}" ToolTip="Paste JSON From Clipboard" Click="btnPasteJson_Click" Margin="3" Padding="2" BorderBrush="Transparent" />
+            <Button x:Name="btnAbout" Content="{StaticResource button-info-small}" ToolTip="About JSONViewer" Click="btnAbout_Click" Margin="3" Padding="2" BorderBrush="Transparent" />
         </StackPanel>
         <TreeView x:Name="tvJson" Grid.Row="1" FontFamily="Cascadia Code" />
     </Grid>
