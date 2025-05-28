@@ -7,6 +7,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>control-tree.ico</ApplicationIcon>
+    <Title>JSON Viewer</Title>
+    <Company>Doug Johnson</Company>
+    <Description>Simple JSON Viewer</Description>
+    <Copyright>2025 Doug Johnson</Copyright>
+    <PackageProjectUrl>https://github.com/doubledeej/JSONViewer</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/doubledeej/JSONViewer.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
