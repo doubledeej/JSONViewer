@@ -10,9 +10,15 @@
     >
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/small/icons.small.resource.dictionary.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
+        <Style TargetType="Button" >
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="3" />
+            <Setter Property="Padding" Value="2" />
+        </Style>
+        <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="/small/icons.small.resource.dictionary.xaml"/>
+        </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -21,10 +27,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" VerticalAlignment="Stretch">
-            <Button x:Name="btnLoadJson" Content="{StaticResource folder-open-small}" ToolTip="Open JSON File" Click="btnLoadJson_Click" Margin="8,3,3,3" Padding="2" BorderBrush="Transparent" />
-            <Button x:Name="btnPasteJson" Content="{StaticResource clipboard-paste-small}" ToolTip="Paste JSON From Clipboard" Click="btnPasteJson_Click" Margin="3" Padding="2" BorderBrush="Transparent" />
-            <Button x:Name="btnAbout" Content="{StaticResource button-info-small}" ToolTip="About JSONViewer" Click="btnAbout_Click" Margin="3" Padding="2" BorderBrush="Transparent" />
+            <Button x:Name="btnLoadJson" Content="{StaticResource folder-open-small}" ToolTip="Open JSON File" Click="btnLoadJson_Click" Margin="8,3,3,3" TabIndex="1" />
+            <Button x:Name="btnPasteJson" Content="{StaticResource clipboard-paste-small}" ToolTip="Paste JSON From Clipboard" Click="btnPasteJson_Click" TabIndex="2" />
+            <Button x:Name="btnAbout" Content="{StaticResource button-info-small}" ToolTip="About JSONViewer" Click="btnAbout_Click" TabIndex="3" />
         </StackPanel>
-        <TreeView x:Name="tvJson" Grid.Row="1" FontFamily="Cascadia Code" />
+        <TreeView x:Name="tvJson" Grid.Row="1" FontFamily="Cascadia Code" TabIndex="0" />
     </Grid>
 </Window>
