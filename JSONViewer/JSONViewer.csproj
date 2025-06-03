@@ -14,6 +14,7 @@
     <PackageProjectUrl>https://github.com/doubledeej/JSONViewer</PackageProjectUrl>
     <RepositoryUrl>https://github.com/doubledeej/JSONViewer.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,6 +5,7 @@ using System.IO;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace JSONViewer
@@ -17,15 +18,22 @@ namespace JSONViewer
         public JsonViewer()
         {
             InitializeComponent();
+            tvJson.AddHandler(TreeViewItem.ExpandedEvent, new RoutedEventHandler(ItemExpanded));
+            tvJson.AddHandler(TreeViewItem.CollapsedEvent, new RoutedEventHandler(ItemCollapsed));
         }
+
+        JsonDocument doc = null;
 
         private void LoadJson(string json, bool showerror = true)
         {
             try
             {
-                JsonDocument doc = JsonDocument.Parse(json);
                 tvJson.Items.Clear();
-                tvJson.Items.Add(BuildTree(doc.RootElement));
+                doc = JsonDocument.Parse(json);
+                tvJson.Visibility = Visibility.Hidden;
+                TreeViewItem rootnode = BuildTree(doc.RootElement);
+                tvJson.Items.Add(rootnode);
+                tvJson.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
             {
@@ -36,9 +44,10 @@ namespace JSONViewer
 
         private TreeViewItem BuildTree(JsonElement element, string key = null, int level = 0)
         {
-            TreeViewItem item = new TreeViewItem
+            TreeViewItem item = new()
             {
-                IsExpanded = true
+                IsExpanded = (level < 2),
+                Tag = element
             };
 
             string jsonKey = key != null ? $"\"{key}\": " : "";
@@ -101,6 +110,41 @@ namespace JSONViewer
             return item;
         }
 
+        private bool isexpanding = false;
+
+        private void ItemExpanded(object sender, RoutedEventArgs e)
+        {
+            if (isexpanding) return;
+            TreeViewItem item = e.OriginalSource as TreeViewItem;
+            if (item?.IsExpanded == true && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
+            {
+                isexpanding = true;
+                ExpandAllChildren(item);
+                isexpanding = false;
+            }
+        }
+
+        private void ExpandAllChildren(TreeViewItem item, bool recursive = false)
+        {
+            item.IsExpanded = true;
+            foreach (TreeViewItem child in item.Items)
+            {
+                if (child.Items.Count == 0)
+                    continue;
+                if (recursive)
+                    ExpandAllChildren(child, recursive);
+                else 
+                    child.IsExpanded = true;
+            }
+        }
+
+        private void ItemCollapsed(object sender, RoutedEventArgs e)
+        {
+            if (e.OriginalSource is TreeViewItem item)
+            {
+                item.Foreground = Brushes.Black;
+            }
+        }
 
         private void btnPasteJson_Click(object sender, RoutedEventArgs e)
         {
